@@ -16,7 +16,7 @@ from scipy import sparse
 from scipy.sparse import csr_matrix
 
 
-def build_netowk(id_val=0):
+def build_netowk(id_val=0, go):
 
     data = pd.read_csv('cath-b-newest-all.txt', sep=" ", header=None)
 
@@ -28,6 +28,7 @@ def build_netowk(id_val=0):
     data['pdb']=data['pdb_chain_domain'].str[:4] # removing extra characters in protein name
     data['pdb'] = data['pdb'].apply(lambda x: x.upper())
     data['pdb_chain'] = data['pdb'] + '_' + data['pdb_chain_domain'].str[4:5]
+    data.drop_duplicates(subset=['pdb'], keep='first', inplace=True)
     #del data['pdb_chain_domain']   
 
     #del data['pdb']
@@ -36,7 +37,12 @@ def build_netowk(id_val=0):
     data['cath']=new[id_val]
     #data['etc.']=new[3] #just takes same homology family into account
     data['cath'] = data['cath'].astype(float)
-    data.drop_duplicates(subset=['pdb'], keep='first', inplace=True)
+    genes_intersect = go.index.intersection(data.pdb_chain)
+    data.set_index('pdb_chain')
+
+    #print genes_intersect
+    data = data.loc[genes_intersect, :]
+    
     del data['pdb']
     #print(data.shape)
     #data.drop_duplicates(subset='etc.', keep='first', inplace=True)
@@ -46,6 +52,7 @@ def build_netowk(id_val=0):
     num_protein = len(protein_list)
     #print len(protein_list)
     pre_values=data.iloc[:,1].values
+    nw = nw.loc[genes_intersect, genes_intersect]
     print(pre_values)
     pre_values = pre_values.astype('int8')
     #print pre_values.shape
@@ -65,8 +72,8 @@ def build_netowk(id_val=0):
            row_idx = row_idx +1
     #data_matrix = data_matrix.astype('float64')
     output_matrix = data_matrix
-    nw = pd.DataFrame(data=output_matrix,index=protein_list,columns=protein_list)
-    nw.to_hdf("nw_%s.h5" %id_val, key="nw", mode="w")
+    np.save('output_matrix.npy', output_matrix)
+    np.save('protein_list.npy', protein_list)
     #print output_matrix
     return output_matrix, protein_list
 
@@ -238,9 +245,11 @@ pdb_id = np.load('pdb_index.npy')
 go = pd.DataFrame(data=go_matrix,index=pdb_id,columns=go_id)
 
 #do the processing for network
-output_matrix, protein_list = build_netowk(3)
-#nw = pd.DataFrame(data=output_matrix,index=protein_list,columns=protein_list)
-nw = pd.read_hdf('nw_3.hdf5', 'nw')
+output_matrix, protein_list = build_netowk(3, go)
+output_matrix = np.load('output_matrix.npy')
+protein_list = np.load('protein_list')
+nw = pd.DataFrame(data=output_matrix,index=protein_list,columns=protein_list)
+#nw = pd.read_hdf('nw_3.hdf5', 'nw')
 #print nw.index.str.strip('_')
 #run egad
 
