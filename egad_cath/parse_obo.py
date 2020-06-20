@@ -233,3 +233,4 @@ def build_ontology(usecache):
         
         #logging.debug("Done constructing input for Ontology().")
 build_ontology("")
+  print 
