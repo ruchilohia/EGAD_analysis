@@ -53,7 +53,7 @@ def build_netowk(go, id_val=0):
     #data.drop_duplicates(subset='etc.', keep='first', inplace=True)
     #print data 
 
-    protein_list=data['pdb_chain'].to_list()
+    protein_list=genes_intersect.to_list()
     num_protein = len(protein_list)
     #print len(protein_list)
     pre_values=data.iloc[:,1].values
