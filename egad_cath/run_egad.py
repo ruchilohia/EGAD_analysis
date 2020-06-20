@@ -16,7 +16,7 @@ from scipy import sparse
 from scipy.sparse import csr_matrix
 
 
-def build_netowk(id_val=0, go):
+def build_netowk(go, id_val=0):
 
     data = pd.read_csv('cath-b-newest-all.txt', sep=" ", header=None)
 
@@ -245,7 +245,7 @@ pdb_id = np.load('pdb_index.npy')
 go = pd.DataFrame(data=go_matrix,index=pdb_id,columns=go_id)
 
 #do the processing for network
-output_matrix, protein_list = build_netowk(3, go)
+output_matrix, protein_list = build_netowk(go, 3)
 output_matrix = np.load('output_matrix.npy')
 protein_list = np.load('protein_list')
 nw = pd.DataFrame(data=output_matrix,index=protein_list,columns=protein_list)
