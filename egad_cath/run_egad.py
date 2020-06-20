@@ -250,13 +250,16 @@ pdb_id = np.load('pdb_index.npy')
 go = pd.DataFrame(data=go_matrix,index=pdb_id,columns=go_id)
 
 
-for id_val in range(0,4):
-#do the processing for network
-    output_matrix, protein_list = build_netowk(go, id_val)
-    output_matrix = np.load('output_matrix_%s.npy' %id_val)
-    protein_list = np.load('protein_list_%s.npy' %id_val)
+#for id_val in range(0,4):
+##do the processing for network
+#    output_matrix, protein_list = build_netowk(go, id_val)
+#    output_matrix = np.load('output_matrix_%s.npy' %id_val)
+#    protein_list = np.load('protein_list_%s.npy' %id_val)
 
 output_matrix = np.load('output_matrix_0.npy') + np.load('output_matrix_1.npy') + np.load('output_matrix_2.npy') + np.load('output_matrix_3.npy')
+output_matrix = output_matrix.astype('float')
+output_matrix = output_matrix * (1./output_matrix.max())
+print(output_matrix)
 
 nw = pd.DataFrame(data=output_matrix,index=protein_list,columns=protein_list)
 #nw = pd.read_hdf('nw_3.hdf5', 'nw')
