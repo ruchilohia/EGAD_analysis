@@ -53,7 +53,6 @@ def build_netowk(go, id_val=0):
     num_protein = len(protein_list)
     #print len(protein_list)
     pre_values=data.iloc[:,1].values
-    nw = nw.loc[genes_intersect, genes_intersect]
     print(pre_values)
     pre_values = pre_values.astype('int8')
     #print pre_values.shape
