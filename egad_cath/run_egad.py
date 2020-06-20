@@ -63,6 +63,8 @@ def build_netowk(id_val=0):
            row_idx = row_idx +1
     #data_matrix = data_matrix.astype('float64')
     output_matrix = data_matrix
+    nw = pd.DataFrame(data=output_matrix,index=protein_list,columns=protein_list)
+    nw.to_hdf("nw_%s.h5" %id_val, key="nw", mode="w")
     #print output_matrix
     return output_matrix, protein_list
 
@@ -235,7 +237,8 @@ go = pd.DataFrame(data=go_matrix,index=pdb_id,columns=go_id)
 
 #do the processing for network
 output_matrix, protein_list = build_netowk(3)
-nw = pd.DataFrame(data=output_matrix,index=protein_list,columns=protein_list)
+#nw = pd.DataFrame(data=output_matrix,index=protein_list,columns=protein_list)
+nw = pd.read_hdf('nw_3.hdf5', 'nw')
 #print nw.index.str.strip('_')
 #run egad
 
