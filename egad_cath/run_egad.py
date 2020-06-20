@@ -251,7 +251,7 @@ go = pd.DataFrame(data=go_matrix,index=pdb_id,columns=go_id)
 #do the processing for network
 output_matrix, protein_list = build_netowk(go, 3)
 output_matrix = np.load('output_matrix.npy')
-protein_list = np.load('protein_list')
+protein_list = np.load('protein_list.npy')
 nw = pd.DataFrame(data=output_matrix,index=protein_list,columns=protein_list)
 #nw = pd.read_hdf('nw_3.hdf5', 'nw')
 #print nw.index.str.strip('_')
