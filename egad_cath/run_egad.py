@@ -38,7 +38,10 @@ def build_netowk(go, id_val=0):
     #data['etc.']=new[3] #just takes same homology family into account
     data['cath'] = data['cath'].astype(float)
     data.set_index('pdb_chain')
+    print(go.index)
+    print(data.index)
     genes_intersect = go.index.intersection(data.index)
+    print(genes_intersect)
     print(data)
 
     #print genes_intersect
