@@ -177,7 +177,7 @@ with h5py.File("/data/johlee/CoCoCoNet/gene2go/yeast_gene2go.hdf5", "r") as f:
 # print nw
 
 
-nw = pd.read_hdf("go.h5", "df")
+nw = pd.read_hdf("nw_C.h5", "df")
 gc.collect()
 # new=data['PDB,CHAIN,SP_PRIMARY,WITH_STRING,EVIDENCE,GO_ID'].str.split(",", n = 5, expand = True)
 # new=data['PDB,CHAIN,SP_PRIMARY,WITH_STRING,EVIDENCE,GO_ID'].str.split(",", n = 5, expand = True)
