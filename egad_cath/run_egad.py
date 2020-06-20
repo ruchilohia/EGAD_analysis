@@ -21,6 +21,7 @@ def build_netowk(id_val=0):
     data = pd.read_csv('cath-b-newest-all.txt', sep=" ", header=None)
 
     data.columns = ["pdb_chain_domain", "version", "cath", "residues"]
+    print(data)
     del data['version']
     del data['residues']
     #print data
@@ -45,6 +46,7 @@ def build_netowk(id_val=0):
     num_protein = len(protein_list)
     #print len(protein_list)
     pre_values=data.iloc[:,1].values
+    print(pre_values)
     pre_values = pre_values.astype('int8')
     #print pre_values.shape
     #p_values = np.reshape(pre_values,(num_protein,1))
