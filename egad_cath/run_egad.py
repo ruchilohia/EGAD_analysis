@@ -34,6 +34,7 @@ def build_netowk(go, id_val=0):
     #del data['pdb']
     new=data['cath'].str.split(".", n = 3, expand = True)  # expand the cath domains
     #print(data.to_string())
+
     data['cath']=new[id_val]
     #data['etc.']=new[3] #just takes same homology family into account
     data['cath'] = data['cath'].astype(float)
@@ -76,8 +77,8 @@ def build_netowk(go, id_val=0):
            row_idx = row_idx +1
     #data_matrix = data_matrix.astype('float64')
     output_matrix = data_matrix
-    np.save('output_matrix.npy', output_matrix)
-    np.save('protein_list.npy', protein_list)
+    np.save('output_matrix_%s.npy' %id_val, output_matrix)
+    np.save('protein_list_%s.npy' %id_val, protein_list)
     #print output_matrix
     return output_matrix, protein_list
 
@@ -248,10 +249,15 @@ pdb_id = np.load('pdb_index.npy')
 
 go = pd.DataFrame(data=go_matrix,index=pdb_id,columns=go_id)
 
+
+for id_val in range(0,4):
 #do the processing for network
-output_matrix, protein_list = build_netowk(go, 3)
-output_matrix = np.load('output_matrix.npy')
-protein_list = np.load('protein_list.npy')
+    output_matrix, protein_list = build_netowk(go, id_val)
+    output_matrix = np.load('output_matrix_%s.npy' %id_val)
+    protein_list = np.load('protein_list_%s.npy' %id_val)
+
+output_matrix = np.load('output_matrix_0.npy') + np.load('output_matrix_1.npy') + np.load('output_matrix_2.npy') + np.load('output_matrix_3.npy')
+
 nw = pd.DataFrame(data=output_matrix,index=protein_list,columns=protein_list)
 #nw = pd.read_hdf('nw_3.hdf5', 'nw')
 #print nw.index.str.strip('_')
