@@ -43,6 +43,7 @@ def build_netowk(go, id_val=0):
 
     #print genes_intersect
     data = data.loc[genes_intersect, :]
+    print(genes_intersect)
     
     del data['pdb']
     #print(data.shape)
