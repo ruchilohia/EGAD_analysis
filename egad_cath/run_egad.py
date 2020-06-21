@@ -259,6 +259,7 @@ go = pd.DataFrame(data=go_matrix,index=pdb_id,columns=go_id)
 id_val = 0
 protein_list = np.load('protein_list_%s.npy' %id_val)
 output_matrix = np.load('output_matrix_%s.npy' %id_val)
+id_val = "all_4"
 output_matrix = np.load('output_matrix_0.npy') + np.load('output_matrix_1.npy') + np.load('output_matrix_2.npy') + np.load('output_matrix_3.npy')
 output_matrix = output_matrix.astype('float')
 output_matrix = output_matrix * (1./output_matrix.max())
